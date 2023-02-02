@@ -8,8 +8,9 @@ const app = express();
 //middleware for the app
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
-app.use('/api', api);
 app.use(express.static('public'));
+app.use('/api', api);
+
 
 //get requests
 app.get('/', (req, res)=> 

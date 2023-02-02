@@ -7,12 +7,13 @@ const readFromFile = util.promisify(fs.readFile);
 const db = ('./db/db.json');
 
 notes.get('/', (req, res) => {
+  console.log(`${req.method} received for notes.`)
   readFromFile(db).then((data) => res.json(JSON.parse(data)));
 });
 
 // POST Route for a new UX/UI tip
 notes.post('/', (req, res) => {
-  console.log(req.body);
+  console.log(`${req.method} received for notes.`);
 
   const {title, text } = req.body;
 
