@@ -18,7 +18,7 @@ If your README is long, add a table of contents to make it easy for users to fin
 
 ## Installation
 
-No installation required. If you would like to use the app, navigate to : 
+No installation required. If you would like to use the app, navigate to : https://da-note-taker.herokuapp.com/
 
 ## Usage
 
