@@ -1,4 +1,3 @@
-const express = require('express');
 const notes = require('express').Router();
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
