@@ -1,17 +1,17 @@
-const notes = require('express').Router();
+const notesR = require('express').Router();
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 const util = require('util');
 const readFromFile = util.promisify(fs.readFile);
 const db = ('./db/db.json');
 
-notes.get('/', (req, res) => {
+notesR.get('/', (req, res) => {
   console.log(`${req.method} received for notes.`)
   readFromFile(db).then((data) => res.json(JSON.parse(data)));
 });
 
 // POST Route for a new UX/UI tip
-notes.post('/', (req, res) => {
+notesR.post('/', (req, res) => {
   console.log(`${req.method} received for notes.`);
 
   const {title, text } = req.body;
@@ -20,7 +20,7 @@ notes.post('/', (req, res) => {
     const newNote = {
       title, 
       text,
-      note_id: uuidv4(),
+      id: uuidv4(),
     };
     fs.readFile(db, 'utf-8', (err, data)=>{
       if (err) {
@@ -41,6 +41,24 @@ notes.post('/', (req, res) => {
   };
 });
 
-module.exports = notes;
+notesR.delete('/:id', (req, res)=> {
+  const noteID = req.params.id;
+  readFromFile('./db/db.json')
+    .then((data) => JSON.parse(data))
+    .then((json) => {
+      
+      const response = json.filter((notes) => notes.id !== noteID);
+    
+      fs.writeFile(db, JSON.stringify(response, null, 4), (err)=> {
+        if (err) {
+          console.log(`There is a ${err} error!`);
+        } else {
+          console.log(`Note has been deleted from ${db} file.`)
+        }
+      });
+    });
+});
+
+module.exports = notesR;
 
 
